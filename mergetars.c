@@ -9,13 +9,6 @@ int main(int argc, char *argv[])
     TempDirNeeded = argc-2;
     TempDir = malloc(TempDirNeeded*sizeof(*TempDir));
 
-    for(int i; i<TempDirNeeded; i++)
-    {
-        *TempDir = malloc(20*sizeof(char));
-        TempDir++;
-    }
-        TempDir-=TempDirNeeded;
-
     //FAILURE CONDITION//
     if(argc<3)
     {
@@ -26,11 +19,13 @@ int main(int argc, char *argv[])
     //TODO ADD FUNCTIONS//
     createdir(TempDirNeeded, TempDir);
 
+    //debugging//
     for(int i=0; i<TempDirNeeded; i++)
     {
         printf("%s\n", *TempDir);
         TempDir++;
     }
+        TempDir-=TempDirNeeded;
 
     exit(EXIT_SUCCESS);
 }

@@ -26,6 +26,8 @@ void createdir(int n, char** TempDirectories)
     {
         char dirName[SIZE];
         
+        *TempDirectories = malloc(SIZE*sizeof(char));
+
         strcpy(dirName, TEMPLATE);
         strcpy(*TempDirectories, mkdtemp(dirName));
 
@@ -41,5 +43,7 @@ void createdir(int n, char** TempDirectories)
   
         TempDirectories++;
     }
+    //change address to first element in pointer//
+        TempDirectories -= n;
 }
 
