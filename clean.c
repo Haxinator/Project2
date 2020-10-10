@@ -1,7 +1,7 @@
 #include "mergetars.h"
 
 //removes temporary directories//
-void clean(char* TempDirectories)
+void clean(char** TempDirectories)
 {
     //TODO
 }

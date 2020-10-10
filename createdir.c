@@ -6,7 +6,7 @@
 
 /*Defintions
     -TEMPLATE is the name and path of temp file created
-    -Size is the number of elements in the char array TEMPLATE
+    -SIZE is the number of elements in the char array TEMPLATE
 */
 #define TEMPLATE "/tmp/Merge-XXXXXX"
 #define SIZE 20
@@ -16,20 +16,24 @@
     arguments.
     Notes:
     - "TempDirectories" stores the paths of the directories created
-    - "n" is the Number of directories created is
+    - "n" is the Number of directories created
 */
-void createdir(int n,char **TempDirectories)
-{
-    //allocate memory corresponding to the size of the path name//
-    *TempDirectories = malloc(SIZE*sizeof(char));
 
+void createdir(int n, char** TempDirectories)
+{
     //Create n Directories//
     for(int DirCount; DirCount<n; DirCount++)
     {
         char dirName[SIZE];
         
         strcpy(dirName, TEMPLATE);
-        *TempDirectories = mkdtemp(dirName);
+        strcpy(*TempDirectories, mkdtemp(dirName));
+
+        if(*TempDirectories == NULL)
+        {
+            fprintf(stderr, "Failed to create Temporary Directory\n");
+            exit(EXIT_FAILURE);
+        }
 
         //debugging//
         printf("%s\n", dirName);

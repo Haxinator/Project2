@@ -10,6 +10,6 @@
 
 //add function declartions//
 extern void createdir(int, char**);
-
+extern void clean(char**);
 //add any global variables//
 
