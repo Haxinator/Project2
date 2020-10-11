@@ -4,6 +4,7 @@ char** TempDir;
 
 int main(int argc, char *argv[])
 {
+    printf("argcount: %i\n", argc);
     //Initalisations and defintions for ease of reading//
     int TempDirNeeded;
     TempDirNeeded = argc-2;
@@ -18,14 +19,13 @@ int main(int argc, char *argv[])
 
     //TODO ADD FUNCTIONS//
     createdir(TempDirNeeded, TempDir);
+    clean(TempDirNeeded, TempDir);    
 
     //debugging//
     for(int i=0; i<TempDirNeeded; i++)
     {
-        printf("%s\n", *TempDir);
-        TempDir++;
+        printf("Dir %i: %s\n", i+1, TempDir[i]);
     }
-        TempDir-=TempDirNeeded;
 
     exit(EXIT_SUCCESS);
 }

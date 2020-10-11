@@ -22,28 +22,22 @@
 void createdir(int n, char** TempDirectories)
 {
     //Create n Directories//
-    for(int DirCount; DirCount<n; DirCount++)
+    for(int i=0; i<n; i++)
     {
         char dirName[SIZE];
         
-        *TempDirectories = malloc(SIZE*sizeof(char));
+        TempDirectories[i] = malloc(SIZE*sizeof(char));
 
         strcpy(dirName, TEMPLATE);
-        strcpy(*TempDirectories, mkdtemp(dirName));
+        strcpy(TempDirectories[i], mkdtemp(dirName));
+        printf("Createdir: %s\n", TempDirectories[i]);
 
-        if(*TempDirectories == NULL)
+        if(TempDirectories[i] == NULL)
         {
             fprintf(stderr, "Failed to create Temporary Directory\n");
             exit(EXIT_FAILURE);
         }
-
-        //debugging//
-        printf("%s\n", dirName);
-        printf("Directories created: %i \n", DirCount+1);
-  
-        TempDirectories++;
     }
     //change address to first element in pointer//
-        TempDirectories -= n;
 }
 

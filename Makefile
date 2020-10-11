@@ -8,7 +8,6 @@ ObjectFiles = mergetars.o FindBestDup.o clean.o copy.o createTar.o \
 
 mergetars: $(ObjectFiles)
 	$(mycc) -o mergetars $(ObjectFiles)
-	make clean
 
 %.o : %.c mergetars.h
 	$(mycc) -c $<
