@@ -38,6 +38,5 @@ void createdir(int n, char** TempDirectories)
             exit(EXIT_FAILURE);
         }
     }
-    //change address to first element in pointer//
 }
 

@@ -31,10 +31,11 @@ void clean(int n, char** TempDirectories)
             //if your parent do that//
             default:
             {
-            //makes the print outputs more readable//
                 int child;
                 int status;
 
+                //makes the print outputs more readable//
+                //tell parent to wait//
                 child = wait(&status);
 
                 printf("%i: Process %i: terminated with status %i\n",i+1,
@@ -43,6 +44,4 @@ void clean(int n, char** TempDirectories)
             }
         }
     }
-    exit(EXIT_SUCCESS);
-
 }

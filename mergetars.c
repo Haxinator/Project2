@@ -1,6 +1,8 @@
 #include "mergetars.h"
 
+//arrays//
 char** TempDir;
+FILES* files;
 
 int main(int argc, char *argv[])
 {
