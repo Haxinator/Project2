@@ -4,11 +4,11 @@ char** TempDir;
 
 int main(int argc, char *argv[])
 {
-    printf("argcount: %i\n", argc);
     //Initalisations and defintions for ease of reading//
     int TempDirNeeded;
     TempDirNeeded = argc-2;
     TempDir = malloc(TempDirNeeded*sizeof(*TempDir));
+    printf("Directory Count: %i\n", TempDirNeeded);
 
     //FAILURE CONDITION//
     if(argc<3)

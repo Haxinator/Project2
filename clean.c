@@ -19,21 +19,30 @@ void clean(int n, char** TempDirectories)
         {
             //fork failed//
             case -1:
-            fprintf(stderr, "clean: fork() failed\n");
-            exit(EXIT_FAILURE);
-            break;
+                fprintf(stderr, "clean: fork() failed\n");
+                exit(EXIT_FAILURE);
+                break;
 
             //if your child do this//        
             case 0:
-            execl("/bin/rm", "/bin/rm","-r","-v", TempDirectories[i], NULL);       
-            break;
+                execl("/bin/rm", "rm","-r","-v", TempDirectories[i], NULL);       
+                break;
 
             //if your parent do that//
             default:
+            {
             //makes the print outputs more readable//
-            sleep(1);      
-            break;
+                int child;
+                int status;
+
+                child = wait(&status);
+
+                printf("%i: Process %i: terminated with status %i\n",i+1,
+                        child, WEXITSTATUS(status));      
+                break;
+            }
         }
     }
+    exit(EXIT_SUCCESS);
 
 }
