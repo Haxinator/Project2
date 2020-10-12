@@ -9,12 +9,16 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/param.h>
+#include <dirent.h>
+#include <sys/param.h>
 //add any #define//
 
 
 //add function declartions//
 extern void createdir(int, char**);
 extern void clean(int, char**);
+extern void extract(char* TempDirectories,char** argv, int numbOfTars);
 
 //add any global variables//
 
