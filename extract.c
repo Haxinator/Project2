@@ -16,7 +16,7 @@ void extract(char *TempDirectories, char *argv[], int argc)
                 fprintf(stderr,"extract: fork() failed in extracting tar and im straight up not having a good time\n");
                 exit(EXIT_FAILURE);
             case 0:
-                execl("/bin/tar","-xvf",argv[i+1],"--directory", extractPath); // having trouble getting this to work will revisit this after a nap. it shouldn't be too hard
+                execl("/bin/tar","tar","-xvf",argv[i+1],"--directory", extractPath); // having trouble getting this to work will revisit this after a nap. it shouldn't be too hard
             default:
                 {
                     int child;
