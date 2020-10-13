@@ -30,7 +30,7 @@ void createdir(int n, char** TempDirectories)
 
         strcpy(dirName, TEMPLATE);
         strcpy(TempDirectories[i], mkdtemp(dirName));
-        printf("Createdir: %s\n", TempDirectories[i]);
+//        printf("Createdir: %s\n", TempDirectories[i]);
 
         if(TempDirectories[i] == NULL)
         {

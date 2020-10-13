@@ -2,7 +2,9 @@
 
 //arrays//
 char** TempDir;
-FILES* files;
+FILES *files;
+int *OutputIndex;
+int size;
 
 int main(int argc, char *argv[])
 {
@@ -21,12 +23,32 @@ int main(int argc, char *argv[])
 
     //TODO ADD FUNCTIONS//
     createdir(TempDirNeeded, TempDir);
-    clean(TempDirNeeded, TempDir);    
-
+    extract(TempDirNeeded, TempDir, argv);
+    store(TempDirNeeded, &size, TempDir, &files);
+    int SizeO = FindBestDup(&size,files, &OutputIndex);
+    clean(TempDirNeeded, TempDir);
+    
     //debugging//
-    for(int i=0; i<TempDirNeeded; i++)
+    files = &files[0];
+
+    for(int i=0; i<size; i++)
     {
-        printf("Dir %i: %s\n", i+1, TempDir[i]);
+        printf("\n\tALL FILES\n");
+        printf("%i: %s\nPath %s\nSubPath %s\nModTime %i\n", i+1, files[i].name,
+                        files[i].path, files[i].subPath,files[i].modTime);
+        printf("Size %i\nArg %i\n", files[i].size, files[i].Arg);
+    }
+
+    for(int i=0; i<SizeO; i++)
+    {
+        printf("\n\tFinal Output\n");
+        int Index = OutputIndex[i];
+        printf("name %s \n", files[Index].name);
+        printf("path %s \n", files[Index].path);
+        printf("size %i \n", files[Index].size);
+        printf("Mod Time %i \n", files[Index].modTime);
+        printf("Arg %i \n", files[Index].Arg);
+        printf("Index %i \n", OutputIndex[i]);
     }
 
     exit(EXIT_SUCCESS);

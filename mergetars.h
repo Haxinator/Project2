@@ -8,25 +8,26 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/param.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
-#include <sys/param.h>
 #include <dirent.h>
-#include <sys/param.h>
 //add any #define//
 
+
+//add any global variables//
+typedef struct{
+	char *name;
+	char *path;
+	char *subPath;
+	int modTime;
+	int size;
+	int Arg;
+} FILES;
 
 //add function declartions//
 extern void createdir(int, char**);
 extern void clean(int, char**);
-extern void extract(char* TempDirectories,char** argv, int numbOfTars);
-
-//add any global variables//
-
-typedef struct{
-	char *name;
-	char *path;
-	int modTime;
-	int size;
-	bool isLastTarArg;
-} FILES;
-
+extern void store(int, int *, char**, FILES**);
+extern void extract(int, char**, char**);
+extern int FindBestDup(int*, FILES*, int**);

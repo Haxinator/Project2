@@ -1,35 +1,48 @@
 #include "mergetars.h"
 
-//decompresses and empties contents of tar files into the temporary directories//
-char extractPath[MAXPATHLEN];
-
-void extract(char *TempDirectories, char *argv[], int argc)
+void ExtractTo(char *TempDirectory, char *argv)
 {
     int pid;
-    for(int i=0;i<argc-2;i++)
+
+    pid = fork();
+
+    switch(pid)
     {
-        strcpy(extractPath,TempDirectories); // wasn't sure whether to use this or strncpy, 
-        pid=fork();
-        switch(pid)
+        case -1:
+            fprintf(stderr, "extract: Failed to fork()");
+            exit(EXIT_FAILURE);
+            break;
+
+        case 0:
+            
+            printf("argv: %s\n TempDir %s\n",argv,TempDirectory);
+            execl("/bin/tar","tar","-xvpf", argv, "-C", TempDirectory, NULL);
+            break;
+
+        default:
         {
-            case -1:
-                fprintf(stderr,"extract: fork() failed in extracting tar and im straight up not having a good time\n");
-                exit(EXIT_FAILURE);
-            case 0:
-                execl("/bin/tar","tar","-xvf",argv[i+1],"--directory", extractPath,NULL); // having trouble getting this to work will revisit this after a nap. it shouldn't be too hard
-            default:
-                {
-                    int child;
-                    int status;
-                    
-                    child=wait(&status);
-                    break;
-                }
-        
+            int child;
+            int status;
+
+            child = wait(&status);
+
+            printf("Child %i Exited with status %i\n", child, WEXITSTATUS(status));
+            break;
         }
-    
+
     }
+
 }
 
+//decompresses and empties contents of tar files into the temporary directories//
 
+void extract(int n,char **TempDirectories, char **argv)
+{
+    for(int i = 0; i<n; i++)
+    {
+        printf("Passing %s and %s\n", TempDirectories[i], argv[i+1]);
+        ExtractTo(TempDirectories[i], argv[i+1]);
+
+    }
+}
 
