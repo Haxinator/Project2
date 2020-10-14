@@ -5,6 +5,7 @@ char** TempDir;
 FILES *files;
 int *OutputIndex;
 int size;
+int SizeO;
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
     createdir(TempDirNeeded, TempDir);
     extract(TempDirNeeded, TempDir, argv);
     store(TempDirNeeded, &size, TempDir, &files);
-    int SizeO = FindBestDup(&size,files, &OutputIndex);
+    FindBestDup(size,&SizeO,files, &OutputIndex);
     clean(TempDirNeeded, TempDir);
     
     //debugging//

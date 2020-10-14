@@ -1,8 +1,28 @@
+/*-----------------------------------------------------------------------------
+                            ////FILE INFO////
+
+    FindBestDup.c is split into three functions:
+        o FindBestDup - calls the below functions where relevant. Increases 
+                        output array size for each unique file found and 
+                        stores each unique file found in OutputIndex.
+        o isBestDup - Finds the best duplicate (most recent) between two files.
+        o inOutput - Checks if provided file is already in the output array.
+
+    This was done in an attempt to make the code more readable by breaking it
+    up into digestable chunks.
+
+    Authour: Joshua Rachpaul
+-----------------------------------------------------------------------------*/
+
 #include "mergetars.h"
 
+    /*IsBestDup//
+    The indicies of two files are passed to isBestDup and the best dup between
+    the two is found. This function compares the first file against the second.
+    Function:
+        - returns true if first file (index i) is best dup.
+        - returns false if second file (index ii) is best dup */
 
-//The indexes of two files are passed to isBestDup and the best dup is found//
-//returns true if first file is best dup//
 bool isBestDup(int i, int ii, FILES* Files)
 {
     //variable defintions for file 1//
@@ -22,15 +42,13 @@ bool isBestDup(int i, int ii, FILES* Files)
     printf("File1: %s\n", PathName1);
     printf("File2: %s\n", PathName2);
 
-    //compare names//
+    //Comparing//
     if(strcmp(PathName1,PathName2))
     {
         //different files//
-        //first file is unique//
         return true;
 
     }else if(!(mtime1==mtime2)){
-        //compare time//
         if(mtime1>mtime2)
         {
             //file1 is more recent//
@@ -42,7 +60,6 @@ bool isBestDup(int i, int ii, FILES* Files)
         }
 
     } else if(!(size1==size2)){
-        //compare size//
         if(size1>size2)
         {
             //file 1 larger//
@@ -55,24 +72,25 @@ bool isBestDup(int i, int ii, FILES* Files)
         return false;
 
     } else if(Arg1>Arg2){
-        //compare Args//
-
         //file1 is last arg//
         return true;
-    //else statment as there will never be a case where two files are the same
-    //and if there is then it doesn't matter what file we copy//
     } else {
-        //file2 is last arg//
+        //file2 is last arg or they're both the same//
         return false;
     }
 }
 
-//inOutput checks if PathName1 is already in the Output, if it is, it already
-//has been compared//
+    /*inOutput//
+    checks if PathName1 is already in the Output, if it is, it already
+    has been compared.
+    returns true if PathName1 in output and false otherwise*/
 
-//returns true if in output//
-bool inOutput(int SizeO, char* PathName1, int *OutputIndex, FILES* Files)
+bool inOutput(int SizeO, int Index1, int *OutputIndex, FILES* Files)
 {
+    //ease of reading defintions
+    char PathName1[MAXPATHLEN];
+    sprintf(PathName1, "%s/%s", Files[Index1].subPath, Files[Index1].name);
+
     for(int i=0; i<SizeO; i++)
     {
         //definitons for ease of reading
@@ -80,68 +98,53 @@ bool inOutput(int SizeO, char* PathName1, int *OutputIndex, FILES* Files)
         int O_Index = OutputIndex[i];
         sprintf(PathName2,"%s/%s", Files[O_Index].subPath, Files[O_Index].name);
 
-        //are they the same?//
         if(!strcmp(PathName1, PathName2))
         {
-            //If they are then PathName1 has already been compared//
             printf("They are the same %s %s\n", PathName1, PathName2);
             return true;
         }
-            printf("They are NOT the same %s %s\n", PathName1, PathName2);
     }
 
     printf("%s has no match\n", PathName1);
-    //if you get here it must be false//
     return false;
 }
 
-//compares all files and finds the best duplicate of file//
-//The index of that file in our structure is stored in OutputIndex//
-int FindBestDup(int *size, FILES *Files, int **OutputIndex)
+    /*FindBestDup
+    Finds the best duplicate of each file pathname. If a file is the most
+    recent duplicate that could be found it's added to the OutputIndex array.
+    The index of that file, relative to our array of files, is stored in
+    OutputIndex.
+    Notes:
+    - Size is the size of the array of files
+    - SizeO is a pointer to the size of the array OutputIndex
+    - Files is an array of FILES
+    - OutputIndex is a pointer to an array of integers*/
+
+void FindBestDup(int size,int *SizeO, FILES *Files, int **OutputIndex)
 {
-    int SizeO = 0;
     int O_Index;
+    int Index;
 
-    for(int i=0; i<(*size); i++)
+    for(int i=0; i<size; i++)
     {
-
-        char PathName[MAXPATHLEN];
-        //create awesome pathname to compare//
-        sprintf(PathName, "%s/%s", Files[i].subPath, Files[i].name);
-        printf("%i: Comparing %s\n", i, PathName);
-
-        //if size is zero then there is nothing in output index/
-        if(SizeO>-1 && inOutput(SizeO, PathName,*OutputIndex, Files))
-        {
-            //if its already in the Output skip comparion
-            continue;
-        }
-
-        //if conditions fail, that means our file hasn't been compared//
-        //add 1 to the total size of output//
-        //put here//
-
-        //the zeros are used to deallocate the pointer//
-        SizeO++;
-        *OutputIndex = realloc(*OutputIndex, SizeO*sizeof(**OutputIndex));
-        OutputIndex[0][i]= i;
-        int Index = SizeO-1;
-
-        //check if unique file is last element, if so add to output//
-        if(i == (*size)-1)
-        {
-
-            printf("Adding last unique file %i", i);            
-            OutputIndex[0][Index] = i;
-
-          //continue loop, which will end the loop//
-            continue;
-        }
         //default output is the first file//
         O_Index = i;
 
+        if(inOutput((*SizeO), i,*OutputIndex, Files))
+        {
+            //if its already in the Output skip comparion
+            continue;
+
+        } else {
+            //the zeros are used to deallocate the pointer//
+            (*SizeO)+=1;
+            *OutputIndex = realloc(*OutputIndex, (*SizeO)*sizeof(**OutputIndex));
+            (*OutputIndex)[i]= i;
+            Index = (*SizeO)-1;
+        }
+
         //start loop after current element we're looking at//
-        for(int ii = i+1; ii<(*size); ii++)
+        for(int ii = i+1; ii<size; ii++)
         {
             //if first file isn't the best dup//
             if(!isBestDup(O_Index, ii, Files))
@@ -151,9 +154,6 @@ int FindBestDup(int *size, FILES *Files, int **OutputIndex)
             }
         }
         printf("added %i to the output\n", O_Index);
-        OutputIndex[0][Index]=O_Index;
-    
+        (*OutputIndex)[Index]=O_Index;
     }
-
-    return SizeO;
 }

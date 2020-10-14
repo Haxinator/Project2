@@ -30,4 +30,4 @@ extern void createdir(int, char**);
 extern void clean(int, char**);
 extern void store(int, int *, char**, FILES**);
 extern void extract(int, char**, char**);
-extern int FindBestDup(int*, FILES*, int**);
+extern void FindBestDup(int, int*, FILES*, int**);

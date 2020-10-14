@@ -6,7 +6,7 @@
 
 /*Defintions
     -TEMPLATE is the name and path of temp file created
-    -SIZE is the number of elements in the char array TEMPLATE
+    -SIZE is the number of elements in the char array TEMPLATE(size of string)
 */
 #define TEMPLATE "/tmp/Merge-XXXXXX"
 #define SIZE 20
@@ -30,7 +30,6 @@ void createdir(int n, char** TempDirectories)
 
         strcpy(dirName, TEMPLATE);
         strcpy(TempDirectories[i], mkdtemp(dirName));
-//        printf("Createdir: %s\n", TempDirectories[i]);
 
         if(TempDirectories[i] == NULL)
         {

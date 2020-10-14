@@ -1,45 +1,43 @@
 #include "mergetars.h"
 
-//removes temporary directories using "rm -r -v" which removes the directory
-//and its contents, and prints what its deleting to the terminal//
+    /*Clean//
+    Clean, when given an array of directories and the size of the array, will
+    delete the directories and their contents.
 
-//fork needs to be used in order to call execl, as the process that calls
-//execl is converted to the process specified in the first argument provided//
+    Uses program "rm" with flags "-r" and "-v". Process forks, child becomes
+    rm and parent waits.
+
+    Notes:
+    - TempDirectories is an array of temporary directories
+    - n is the size of the temporary directories array*/
 
 void clean(int n, char** TempDirectories)
 {
     int pid;
 
     //creates a process for every directory created//
-    //child will turn into "rm" and parent will wait for child//
     for(int i=0; i<n; i++)   
     {
         pid = fork();
         switch(pid)
         {
-            //fork failed//
             case -1:
                 fprintf(stderr, "clean: fork() failed\n");
                 exit(EXIT_FAILURE);
                 break;
 
-            //if your child do this//        
             case 0:
                 execl("/bin/rm", "rm","-r","-v", TempDirectories[i], NULL);       
                 break;
 
-            //if your parent do that//
             default:
             {
                 int child;
                 int status;
 
-                //makes the print outputs more readable//
-                //tell parent to wait//
                 child = wait(&status);
-
-                printf("%i: Process %i: terminated with status %i\n",i+1,
-                        child, WEXITSTATUS(status));      
+                printf("Process %i terminated with status %i\n", 
+                        child, WEXITSTATUS(status));
                 break;
             }
         }
