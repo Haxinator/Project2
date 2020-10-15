@@ -16,7 +16,7 @@ void clean(int n, char** TempDirectories)
     int pid;
 
     //creates a process for every directory created//
-    for(int i=0; i<n; i++)   
+    for(int i=0; i<n; i++)   //remove -1//
     {
         pid = fork();
         switch(pid)

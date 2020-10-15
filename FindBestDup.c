@@ -139,7 +139,6 @@ void FindBestDup(int size,int *SizeO, FILES *Files, int **OutputIndex)
             //the zeros are used to deallocate the pointer//
             (*SizeO)+=1;
             *OutputIndex = realloc(*OutputIndex, (*SizeO)*sizeof(**OutputIndex));
-            (*OutputIndex)[i]= i;
             Index = (*SizeO)-1;
         }
 

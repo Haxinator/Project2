@@ -11,7 +11,9 @@
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <sys/time.h>
 #include <dirent.h>
+#include <fcntl.h>
 //add any #define//
 
 
@@ -31,3 +33,5 @@ extern void clean(int, char**);
 extern void store(int, int *, char**, FILES**);
 extern void extract(int, char**, char**);
 extern void FindBestDup(int, int*, FILES*, int**);
+extern void copy(int*, int, char*, FILES*);
+extern void createTar(char*, char*);

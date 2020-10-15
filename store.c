@@ -115,6 +115,7 @@ void readDirectory(char *Path, char *SubPath, FILES **fpp, int Arg, int *size)
 void store(int n, int *size, char **TempDirectories, FILES **fp)
 {
     *size = 0;
+    n-=1; //dont look through last directory//
 
     //read each temporary directory//
     for(int i=0; i<n; i++)

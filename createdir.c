@@ -22,7 +22,7 @@
 void createdir(int n, char** TempDirectories)
 {
     //Create n Directories//
-    for(int i=0; i<n; i++)
+    for(int i=0; i<n; i++)  //add 1 to create tmp output directory//
     {
         char dirName[SIZE];
         

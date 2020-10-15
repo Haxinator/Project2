@@ -19,6 +19,7 @@ void extract(int n,char **TempDirectories, char **argv)
     int pid;
     char *Directory;
     char *InputTar;
+    n-=1; //dont extract anything in the last tmp directory//
 
     for(int i = 0; i<n; i++)
     {
