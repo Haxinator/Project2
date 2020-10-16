@@ -40,6 +40,11 @@ void CreateSub(int *OutputIndex, int SizeO, char* Destination, FILES *Files)
                 child = wait(&status);
                 printf("Process %i terminated with status %i\n", 
                                 child,WEXITSTATUS(status));
+
+                if(WEXITSTATUS(status)>0)
+                {
+                    exit(EXIT_FAILURE);
+                }
                 break;
             }
         }

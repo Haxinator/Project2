@@ -46,8 +46,12 @@ void extract(int n,char **TempDirectories, char **argv)
                 int status;
 
                 child = wait(&status);
-                printf("Process %i terminated with status %i\n", 
+                printf("Extract: Process %i terminated with status %i\n", 
                             child,WEXITSTATUS(status));
+                if(WEXITSTATUS(status)>0)
+                {
+                    exit(EXIT_FAILURE);
+                }
                 break;
             }
          }
