@@ -9,4 +9,6 @@ For determining which file is most recent the following rules are used:
 
 ## How to Use 
 Invoke the program using the command line, with the pathnames of the tars you want to merge as arguments. The final argument is the pathname of output tar file.
+
+
 ```> ./mergetars input_tarfile1 [input_tarfile2 ...] output_tarfile```
