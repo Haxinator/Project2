@@ -7,8 +7,12 @@ For determining which file is most recent the following rules are used:
 - If two files have the same modification time, then the larger file is considered most recent.
 - Otherwise the last file mentioned on the command line is selected.
 
-## How to Use 
-Invoke the program using the command line, with the pathnames of the tars you want to merge as arguments. The final argument is the pathname of output tar file.
+ Note this application was developed for linux and hasn't been tested on other platforms.
+ 
+## How to Compile
+This progam uses a makefile to compile code. Simply run ```make``` to compile the program.
 
+## How to Use 
+Invoke the program using the command line, with the pathnames of the tars you want to merge as arguments. The final argument is the pathname of output tar file.An example is given below:
 
 ```> ./mergetars input_tarfile1 [input_tarfile2 ...] output_tarfile```
